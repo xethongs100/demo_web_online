@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@yield('title')</title>
+	<link href="{{asset('http://fonts.googleapis.com/css?family=Dosis:300,400')}}" rel="stylesheet" type="text/css">
+	<link href="{{asset('http://fonts.googleapis.com/css?family=Open+Sans:400,300')}}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{asset('http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/dest/css/font-awesome.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/dest/vendors/colorbox/example3/colorbox.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/dest/rs-plugin/css/settings.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/dest/rs-plugin/css/responsive.css')}}">
+	<link rel="stylesheet" title="style" href="{{asset('assets/dest/css/style.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/dest/css/animate.css')}}">
+	<link rel="stylesheet" title="style" href="{{asset('assets/dest/css/huong-style.css')}}">
+	@yield('css')
+</head>
+<body>
+
+	<div id="header">
+		<div class="header-top">
+			<div class="container">
+				<div class="pull-left auto-width-left">
+					<ul class="top-menu menu-beta l-inline">
+						<li><a href=""><i class="fa fa-home"></i>53 đường 144 ,phường Tân Phú, Quận 9</a></li>
+						<li><a href=""><i class="fa fa-phone"></i> 0382 484 093</a></li>
+					</ul>
+				</div>
+				<div class="pull-right auto-width-right">
+					<ul class="top-details menu-beta l-inline">
+						@if(Auth::check()&&Session::has('name')&&Session::has('id'))
+							<li><a href="{{route('view_profile',['id'=>Session::get('id')])}}"><i class="fa fa-user"></i>{{Session::get('name')}}</a></li>
+							<li><a href="{{route('thoat')}}">Thoát</a></li>
+						@else
+							<li><a href="{{route('view_register')}}">Đăng kí</a></li>
+							<li><a href="{{route('view_login')}}">Đăng nhập</a></li>
+						@endif
+					</ul>
+				</div>
+				<div class="clearfix"></div>
+			</div> <!-- .container -->
+		</div> <!-- .header-top -->
+		<div class="header-body">
+			<div class="container beta-relative">
+				<div class="pull-left">
+					<a href="{{route('home')}}" id="logo"><img src="{{asset('assets/dest/images/logo-cake.png')}}" width="200px" alt=""></a>
+				</div>
+				<div class="pull-right beta-components space-left ov">
+					<div class="space10">&nbsp;</div>
+					<div class="beta-comp">
+						<form role="search" method="get" id="searchform" action="{{route('tim-kiem')}}">
+					        <input type="text" value="" name="seach" id="s" placeholder="Nhập từ khóa..." />
+					        <button class="fa fa-search" type="submit" id="searchsubmit"></button>
+						</form>
+					</div>
+					<div class="beta-comp">
+						<div class="cart">
+							<i class="fa fa-shopping-cart"></i><a href="{{route('danh-sach-sp')}}"> Giỏ hàng({{Cart::count()}})</a><i class="fa fa-chevron-down"></i>
+						</div> <!-- .cart -->
+					</div>
+					@if(Auth::check())
+					<div class="beta-comp">
+						<div class="cart">
+							<a href="{{route('hoa-don')}}"> Đơn mua</a><i class="fa fa-chevron-down"></i>
+						</div> <!-- .cart -->
+					</div>
+					@endif
+				</div>
+				<div class="clearfix"></div>
+			</div> <!-- .container -->
+		</div> <!-- .header-body -->
+		<div class="header-bottom" style="background-color: #0277b8;">
+			<div class="container">
+				<a class="visible-xs beta-menu-toggle pull-right" href="#"><span class='beta-menu-toggle-text'>Menu</span> <i class="fa fa-bars"></i></a>
+				<div class="visible-xs clearfix"></div>
+				<nav class="main-menu">
+					<ul class="l-inline ov">
+						<li><a href="{{route('trangchu')}}">Trang chủ</a></li>
+						<li><a href="#">Sản phẩm</a>
+							<ul class="sub-menu">
+							@foreach($t_product as $ds1)
+								<li><a href="{{route('type_product',['id'=>$ds1->id,'name'=>$ds1->name])}}">{{$ds1->name}}</a></li>
+							@endforeach
+							</ul>
+						</li>
+						<li><a href="#">Giới thiệu</a></li>
+						<li><a href="#">Liên hệ</a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</nav>
+			</div> <!-- .container -->
+		</div> <!-- .header-bottom -->
+	</div> <!-- #header -->
+
+	@yield('slide')
+	
+
+	@yield('content')
+	
+
+	<div id="footer" class="color-div">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="widget">
+						<h4 class="widget-title">Instagram Feed</h4>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="widget">
+						<h4 class="widget-title">Chi nhánh</h4>
+						<div>
+							<ul>
+								<li><a href=""><i class="fa fa-chevron-right"></i> Alley Bakery 1 (Chi nhánh Nguyễn Trãi)</a></li>
+								<li><a href=""><i class="fa fa-chevron-right"></i> Alley Bakery 2 (Chi nhánh Võ Văn Ngân)</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+				 <div class="col-sm-10">
+					<div class="widget">
+						<h4 class="widget-title">Contact Us</h4>
+						<div>
+							<div class="contact-info">
+								<i class="fa fa-map-marker"></i>
+								<p>129/15,đường 154,khu phố 3,phường Tân Phú,Quận 9,Tp.HCM,Số điện thoại:0382.484.093</p>
+							</div>
+						</div>
+					</div>
+				  </div>
+				</div>
+			</div> <!-- .row -->
+		</div> <!-- .container -->
+	</div> <!-- #footer -->
+	<div class="copyright">
+		<div class="container">
+			<p class="pull-left">Giải pháp website. (&copy;) 2019</p>
+			<div class="clearfix"></div>
+		</div> <!-- .container -->
+	</div> <!-- .copyright -->
+
+
+	<!-- include js files -->
+	@yield('js')
+	<script src="{{asset('assets/dest/js/jquery.js')}}"></script>
+	<script src="{{asset('assets/dest/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js')}}"></script>
+	<script src="{{asset('http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js')}}"></script>
+	<script src="{{asset('assets/dest/vendors/bxslider/jquery.bxslider.min.js')}}"></script>
+	<script src="{{asset('assets/dest/vendors/colorbox/jquery.colorbox-min.js')}}"></script>
+	<script src="{{asset('assets/dest/vendors/animo/Animo.js')}}"></script>
+	<script src="{{asset('assets/dest/vendors/dug/dug.js')}}"></script>
+	<script src="{{asset('assets/dest/js/scripts.min.js')}}"></script>
+	<script src="{{asset('assets/dest/rs-plugin/js/jquery.themepunch.tools.min.js')}}"></script>
+	<script src="{{asset('assets/dest/rs-plugin/js/jquery.themepunch.revolution.min.js')}}"></script>
+	<script src="{{asset('assets/dest/js/waypoints.min.js')}}"></script>
+	<script src="{{asset('assets/dest/js/wow.min.js')}}"></script>
+	<!--customjs-->
+	<script src="{{asset('assets/dest/js/custom2.js')}}"></script>
+
+	<!-- <script src="{{asset('//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')}}"></script> -->
+	<!-- <script src="{{asset('assets/dest/js/ajax.js')}}"></script> -->
+	<script>
+	$(document).ready(function($) {    
+		$(window).scroll(function(){
+			if($(this).scrollTop()>150){
+			$(".header-bottom").addClass('fixNav')
+			}else{
+				$(".header-bottom").removeClass('fixNav')
+			}}
+		)
+
+		$(".update").click(function (){
+		var rowId = $(this).attr('id');
+		var qty = $(this).parent().parent().find("input").val();
+		var token = $("input[name='_token']").val();
+		//alert(rowId);
+		$.ajax({
+			url:'gio-hang/cap-nhat/'+rowId+'/'+qty,
+			type:'GET',
+			cache:false,
+			data:{"_token":token,"id":rowId,"qty":qty},
+			success:function(data) {
+				if(data == "update"){
+					//alert('Yes');
+					window.location = "gio-hang"
+				}
+			}
+			});
+		});
+
+		// $(".comment").click(function (){
+		// 	var comment = $("textarea[name='comment']").val();
+		// 	var id_type = $("input[name='id_product_type']").val();
+		// 	var id = $(this).attr('id');
+		// 	//alert(id_type);
+		// 	$.ajax({
+		// 		url:'san-pham/comment/'+id+'/'+id_type,
+		// 		type:'POST',
+		// 		cache:false,
+		// 		data:{"id":id,"id_type":id_type,"comment":comment},
+		// 		success:function(data) {
+		// 			if(data == "comment"){
+		// 				alert(111);
+		// 				//window.location = "san-pham/id/id_type"
+		// 			}
+		// 		}
+		// 	});
+		// });
+	});
+	</script>
+</body>
+</html>
